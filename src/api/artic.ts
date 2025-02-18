@@ -18,7 +18,7 @@ type FindData = {
     id: number
     title: string
     date_display: string
-    artist_display: string
+    artist_title: string
     short_description: string
     image_id: string
   }>
@@ -48,7 +48,7 @@ export const search = async (input: SearchInput): Promise<SearchResult> => {
       thumbnail: `https://www.artic.edu/iiif/2/${x.image_id}/full/!400,400/0/default.jpg`,
       image: `https://www.artic.edu/iiif/2/${x.image_id}/full/full/0/default.jpg`,
       summary: x.short_description,
-      artist: x.artist_display,
+      artist: x.artist_title,
       date: x.date_display,
       title: x.title,
       id: `${x.id}`

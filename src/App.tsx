@@ -10,7 +10,6 @@ export const App = () => {
   return (
     <Box>
       <Header />
-
       <Routes>
         <Route path="/" Component={Home} />
         <Route path="/artwork/:id" Component={Artwork} />

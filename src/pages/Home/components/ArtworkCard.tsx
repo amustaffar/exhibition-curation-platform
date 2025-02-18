@@ -8,6 +8,8 @@ export type ArtworkCardProps = {
   title: string
   artist: string
   date: string
+  onAdd: () => void
+  selected?: boolean
 }
 
 export const ArtworkCard = (props: ArtworkCardProps) => {
@@ -31,7 +33,13 @@ export const ArtworkCard = (props: ArtworkCardProps) => {
       </CardActionArea>
 
       <CardActions>
-        <Button size="small" color="primary" startIcon={<Add />}>
+        <Button
+          size="small"
+          color="primary"
+          startIcon={<Add />}
+          disabled={props.selected}
+          onClick={() => props.onAdd()}
+        >
           Add to Exhibition
         </Button>
       </CardActions>

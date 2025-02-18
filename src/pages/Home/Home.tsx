@@ -1,20 +1,44 @@
-import { Box, Container, Grid2 as Grid } from '@mui/material'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
+import { Box, Container, Grid2 as Grid, Pagination, Alert, Button } from '@mui/material'
 import { SearchBar } from './components/SearchBar'
 import { ArtworkCard } from './components/ArtworkCard'
+import { ExhibitionDrawer } from './components/ExhibitionDrawer'
 import { useSearchArtwork } from '../../api/useSearchArtwork'
+import { useDebouncedState } from '../../support/useDebouncedState'
+import { Artwork } from '../../api/types'
 
-// Container
+const LIMIT = 12
 
-const ARTWORK = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
+// TODO: Scroll to top when the page changes
+// TODO: Loading indicator
 
 export const Home = () => {
-  const [term, setTerm] = useState<string>('')
-  const { total, items } = useSearchArtwork()
+  const [selected, setSelected] = useState<ReadonlyArray<Artwork>>([])
+  const [term, searchValue, setSearchValue] = useDebouncedState('')
+  const [page, setPage] = useState(1)
+
+  useEffect(() => {
+    setPage(1)
+  }, [term])
+
+  const { total, items } = useSearchArtwork({ page, term, limit: LIMIT })
 
   return (
     <Container maxWidth="xl">
-      <SearchBar searchValue={term} onSearch={setTerm} />
+      {selected.length > 0 && (
+        <Alert
+          severity="info"
+          action={
+            <Button color="inherit" size="small">
+              VIEW
+            </Button>
+          }
+        >
+          {selected.length} artworks in your exhibition
+        </Alert>
+      )}
+
+      <SearchBar searchValue={searchValue} onSearch={setSearchValue} />
 
       <Box p={2}>
         <Grid container spacing={2}>
@@ -27,12 +51,28 @@ export const Home = () => {
                   artist={x.artist}
                   date={x.date}
                   image={x.thumbnail}
+                  selected={selected.map((y) => y.id).includes(x.id)}
+                  onAdd={() => setSelected((prev) => [...prev, x])}
                 />
               </Grid>
             )
           })}
         </Grid>
       </Box>
+        
+      <Box display="flex" justifyContent="center" p={2} pb={4} mb="56px">
+        <Pagination
+          count={Math.ceil(total / LIMIT)}
+          onChange={(_, x) => setPage(x)}
+          variant="outlined"
+          shape="rounded"
+          page={page}
+        />
+      </Box>
+
+      {/* <ExhibitionDrawer
+        bleeding={56}
+      /> */}
     </Container>
   )
 }
