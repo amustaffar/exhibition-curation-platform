@@ -1,37 +1,65 @@
 import React from 'react'
-import { Box, SwipeableDrawer } from '@mui/material'
+import { Avatar, Box, Button, Drawer, IconButton, List, ListItem, ListItemAvatar, ListItemText, Toolbar, Typography } from '@mui/material'
+import { Delete } from '@mui/icons-material'
+import { Artwork } from '../../../api/types'
+import { Link } from 'react-router'
 
 export type ExhibitionDrawerProps = {
-  bleeding: number
+  artworks: ReadonlyArray<Artwork>
+  onRemove: (a: Artwork) => void
+  onClose: () => void
+  open?: boolean
 }
 
 export const ExhibitionDrawer = (props: ExhibitionDrawerProps) => {
   return (
-    <SwipeableDrawer
-      PaperProps={{ sx: { overflow: 'visible', maxWidth: '50%', left: '25%' } }}
-      ModalProps={{ keepMounted: true }}
-      swipeAreaWidth={props.bleeding}
-      onClose={() => {}}
-      onOpen={() => {}}
-      anchor="bottom"
+    <Drawer
+      PaperProps={{ sx: { width: '300px' }}}
+      onClose={props.onClose}
+      open={props.open}
+      anchor="right"
     >
-      <Box
-        sx={{
-          boxShadow: '0 -1px 10px rgba(0,0,0,0.1)',
-          border: '1px solid #ddd',
-          position: 'absolute',
-          top: -props.bleeding,
-          borderTopLeftRadius: 8,
-          borderTopRightRadius: 8,
-          backgroundColor: '#fff',
-          height: props.bleeding,
-          visibility: 'visible',
-          right: 0,
-          left: 0
-        }}
-      >
-        zsdfasd
+      <Toolbar>
+        <Typography variant="h6" component="div">
+          Your Exhibition
+        </Typography>
+      </Toolbar>
+
+      <List>
+        {props.artworks.map((a) => {
+          return (
+            <ListItem
+              key={a.id}
+              divider
+              secondaryAction={
+                <IconButton color="error" onClick={() => props.onRemove(a)}>
+                  <Delete />
+                </IconButton>
+              }
+            >
+              <ListItemAvatar>
+                <Avatar variant="rounded" src={a.thumbnail} />
+              </ListItemAvatar>
+
+              <ListItemText
+                primary={a.title}
+                secondary={a.artist}
+              />
+            </ListItem>
+          )
+        })}
+      </List>
+
+      <Box p={2}>
+        <Button
+          to={`/exhibition/${props.artworks.map((a) => a.id).join(',')}`}
+          component={Link}
+          variant="contained"
+          fullWidth
+        >
+          View Exhibition
+        </Button>
       </Box>
-    </SwipeableDrawer>
+    </Drawer>
   )
 }

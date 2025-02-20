@@ -9,12 +9,9 @@ export type SearchBarProps = {
 
 export const SearchBar = (props: SearchBarProps) => {
   return (
-    <Toolbar disableGutters sx={{ justifyContent: 'flex-end', borderBottom: '1px solid #e5e5e5' }}>
+    <Toolbar disableGutters sx={{ justifyContent: 'flex-end' }}>
       <TextField
-        onChange={(e) => {
-          props.onSearch(e.target.value)
-          console.log(e)
-        }}
+        onChange={(e) => props.onSearch(e.target.value)}
         sx={{ backgroundColor: '#fff' }}
         value={props.searchValue}
         placeholder="Search"

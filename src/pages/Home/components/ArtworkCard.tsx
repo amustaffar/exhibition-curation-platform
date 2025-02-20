@@ -1,6 +1,6 @@
 import React from 'react'
 import { Button, Card, CardActionArea, CardActions, CardContent, CardMedia, Typography } from '@mui/material'
-import { Add } from '@mui/icons-material'
+import { Add, Delete } from '@mui/icons-material'
 
 export type ArtworkCardProps = {
   id: string
@@ -9,6 +9,7 @@ export type ArtworkCardProps = {
   artist: string
   date: string
   onAdd: () => void
+  onRemove: () => void
   selected?: boolean
 }
 
@@ -33,15 +34,25 @@ export const ArtworkCard = (props: ArtworkCardProps) => {
       </CardActionArea>
 
       <CardActions>
-        <Button
-          size="small"
-          color="primary"
-          startIcon={<Add />}
-          disabled={props.selected}
-          onClick={() => props.onAdd()}
-        >
-          Add to Exhibition
-        </Button>
+        {props.selected ? (
+          <Button
+            size="small"
+            color="error"
+            startIcon={<Delete />}
+            onClick={() => props.onRemove()}
+          >
+            Remove from Exhibition
+          </Button>
+        ) : (
+          <Button
+            size="small"
+            color="primary"
+            startIcon={<Add />}
+            onClick={() => props.onAdd()}
+          >
+            Add to Exhibition
+          </Button>
+        )}
       </CardActions>
     </Card>
   )
