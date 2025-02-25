@@ -51,7 +51,7 @@ export const ArtworkGrid = (props: ArtworkGridProps) => {
         <Box display="flex" justifyContent="center" p={2} pb={2}>
           <Pagination
             count={Math.ceil(props.total / props.limit)}
-            onChange={(_, x) => props.onPageChange(x)}
+            onChange={(_, page) => props.onPageChange(page)}
             variant="outlined"
             shape="rounded"
             page={props.page}

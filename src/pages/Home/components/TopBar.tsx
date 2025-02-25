@@ -5,6 +5,7 @@ import { Close, MenuOpen } from '@mui/icons-material'
 export type TopBarProps = {
   selectedItems: number
   onView: () => void
+  // onPreviewExhibitionClick
   onClear: () => void
 }
 
