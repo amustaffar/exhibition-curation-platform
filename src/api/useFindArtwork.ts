@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import * as artic from './artic'
-import { Artwork, SearchResult } from './types'
+import { Artwork, Page } from './types'
 
 type UseFindArtworkProps = {
   id: string

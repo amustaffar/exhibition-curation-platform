@@ -2,7 +2,6 @@ import React from 'react'
 import { Box } from '@mui/material'
 import { Routes, Route } from 'react-router'
 import { Exhibition } from './pages/Exhibition'
-import { Artwork } from './pages/Artwork'
 import { Home } from './pages/Home'
 
 export const App = () => {
@@ -10,7 +9,6 @@ export const App = () => {
     <Box>
       <Routes>
         <Route path="/" Component={Home} />
-        <Route path="/artwork/:id" Component={Artwork} />
         <Route path="/exhibition/:ids" Component={Exhibition} />
       </Routes>
     </Box>

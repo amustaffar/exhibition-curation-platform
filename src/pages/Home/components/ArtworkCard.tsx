@@ -10,25 +10,26 @@ export type ArtworkCardProps = {
   date: string
   onAdd: () => void
   onRemove: () => void
+  onClick: () => void
   selected?: boolean
 }
 
 export const ArtworkCard = (props: ArtworkCardProps) => {
   return (
     <Card variant="outlined">
-      <CardActionArea>
+      <CardActionArea onClick={props.onClick}>
         <CardMedia
           sx={{ aspectRatio: '1/1', backgroundColor: '#fafafa' }}
           image={props.image}
         />
 
         <CardContent>
-          <Typography variant="body1" component="div">
+          <Typography variant="body1" component="div" noWrap>
             {props.title}
           </Typography>
 
-          <Typography variant="body2" component="div">
-            {props.artist} - {props.date}
+          <Typography variant="body2" component="div" noWrap>
+            {props.artist}: {props.date}
           </Typography>
         </CardContent>
       </CardActionArea>

@@ -15,7 +15,11 @@ export type SearchInput = {
   limit: number
 }
 
-export type SearchResult = {
+export type Page = {
   total: number
   items: Array<Artwork>
 }
+
+export type SearchResult =
+  | { tag: 'ok'; page?: Page; loading: boolean }
+  | { tag: 'error' }

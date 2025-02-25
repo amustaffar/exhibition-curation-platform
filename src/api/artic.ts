@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { Artwork, SearchInput, SearchResult } from './types'
+import { Artwork, SearchInput, Page } from './types'
 
 type ApiArtwork = {
   id: number
@@ -19,7 +19,7 @@ type FindData = {
   data: Array<ApiArtwork>
 }
 
-export const search = async (input: SearchInput): Promise<SearchResult> => {
+export const search = async (input: SearchInput): Promise<Page> => {
   const searchResult = await axios.request<SearchData>({
     method: 'GET',
     url: 'https://api.artic.edu/api/v1/artworks/search',

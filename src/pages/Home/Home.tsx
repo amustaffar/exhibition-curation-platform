@@ -1,81 +1,79 @@
 import React, { useEffect, useState } from 'react'
-import { Box, Container, Grid2 as Grid, Pagination, Alert, Button } from '@mui/material'
-import { SearchBar } from './components/SearchBar'
-import { ArtworkCard } from './components/ArtworkCard'
+import { Box, LinearProgress } from '@mui/material'
 import { ExhibitionDrawer } from './components/ExhibitionDrawer'
 import { useSearchArtwork } from '../../api/useSearchArtwork'
 import { useDebouncedState } from '../../support/useDebouncedState'
 import { Artwork } from '../../api/types'
 import { TopBar } from './components/TopBar'
+import { ArtworkGrid } from './components/ArtworkGrid'
+import { useArrayState } from '../../support/useArrayState'
+import { ErrorState } from '../../components/ErrorState'
+import { ArtworkDetail } from './components/ArtworkDetail'
 
 const LIMIT = 12
-
-// TODO: Scroll to top when the page changes
-// TODO: Loading indicator
+// default limit for APIs, in pagination
 
 export const Home = () => {
   // TODO: This should be in local or session storage
-  const [selected, setSelected] = useState<ReadonlyArray<Artwork>>([])
-  const [open, setOpen] = useState(false)
-
+  const exhibition = useArrayState<Artwork>([])
+  // refer "support" - all the logics to manipulate arrays - out of Home
+  const [exhibitionDrawerOpen, setExhibitionDrawerOpen] = useState(false)
+// (1) term - debounced value, (2) live value
   const [term, searchValue, setSearchValue] = useDebouncedState('')
   const [page, setPage] = useState(1)
 
-  useEffect(() => {
-    setPage(1)
-  }, [term])
+  useEffect(() => { setPage(1) }, [term])
 
-  const { total, items } = useSearchArtwork({ page, term, limit: LIMIT })
+  const [result, retry] = useSearchArtwork({ page, term, limit: LIMIT })
+  const [selected, setSelected] = useState<Artwork | null>(null)
 
+  // return <div /> or a <box />
   return (
     <Box>
       <TopBar
-        selectedItems={selected.length}
-        onClear={() => setSelected([])}
-        onView={() => setOpen(true)}
+        selectedItems={exhibition.items.length}
+        onView={() => setExhibitionDrawerOpen(true)}
+        onClear={exhibition.clear}
       />
 
-      <Container maxWidth="xl" sx={{ py: 2 }}>
-        <SearchBar searchValue={searchValue} onSearch={setSearchValue} />
+      {result.tag == 'ok' && result.loading && (
+        <LinearProgress />
+      )}
 
-        <Box py={2}>
-          <Grid container spacing={2}>
-            {items.map((x) => {
-              return (
-                <Grid size={{ xs: 12, sm: 6, md: 3 }} key={x.id}>
-                  <ArtworkCard
-                    id={x.id}
-                    title={x.title}
-                    artist={x.artist}
-                    date={x.date}
-                    image={x.thumbnail}
-                    selected={selected.map((y) => y.id).includes(x.id)}
-                    onAdd={() => setSelected((prev) => [...prev, x])}
-                    onRemove={() => setSelected((prev) => prev.filter((y) => y.id !== x.id))}
-                  />
-                </Grid>
-              )
-            })}
-          </Grid>
-        </Box>
-          
-        <Box display="flex" justifyContent="center" p={2} pb={2}>
-          <Pagination
-            count={Math.ceil(total / LIMIT)}
-            onChange={(_, x) => setPage(x)}
-            variant="outlined"
-            shape="rounded"
-            page={page}
-          />
-        </Box>
-      </Container>
+      {(result.tag === 'ok' && result.page !== undefined) && (
+        <ArtworkGrid
+          // Selection / Viewing
+          onClick={(artwork) => setSelected(artwork)}
+          // Searching
+          onSearch={setSearchValue}
+          searchValue={searchValue}
+          // Pagination
+          page={page}
+          limit={LIMIT}
+          items={result.page.items}
+          total={result.page.total}
+          onPageChange={setPage}
+          // Exhibition
+          onAdd={exhibition.add}
+          onRemove={exhibition.remove}
+          selectedIds={exhibition.items.map((x) => x.id)}
+        />
+      )}
+
+      {result.tag === 'error' && (
+        <ErrorState onRetry={retry} />
+      )}
 
       <ExhibitionDrawer
-        artworks={selected}
-        onClose={() => setOpen(false)}
-        // This should be in a helper function or hook
-        onRemove={(a) => setSelected((prev) => prev.filter((x) => x.id !== a.id))}
-        open={open}
+        artworks={exhibition.items}
+        onClose={() => setExhibitionDrawerOpen(false)}
+        onRemove={exhibition.remove}
+        open={exhibitionDrawerOpen}
+      />
+
+      <ArtworkDetail
+        artwork={selected}
+        onClose={() => setSelected(null)}
       />
     </Box>
   )

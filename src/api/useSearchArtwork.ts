@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import * as artic from './artic'
-import { SearchResult } from './types'
+import { Page, SearchResult } from './types'
 
 type UseSearchArtworkProps = {
   term: string
@@ -8,18 +8,23 @@ type UseSearchArtworkProps = {
   limit: number
 }
 
-export const useSearchArtwork = (props: UseSearchArtworkProps): SearchResult => {
-  const [state, setState] = useState<SearchResult>({ total: 0, items: [] })
+export const useSearchArtwork = (props: UseSearchArtworkProps): [SearchResult, () => void] => {
+  const [state, setState] = useState<SearchResult>({ tag: 'ok', loading: true })
+  const [failed, setFailed] = useState(false)
 
   useEffect(() => {
-    artic.search({
-      term: props.term,
-      page: props.page,
-      limit: props.limit
-    }).then((result) => {
-      setState(result)
-    })
-  }, [props.term, props.page, props.limit])
+    if (!failed) {
+      setState((prev) => ({ ...prev, loading: true }))
 
-  return state
+      artic.search(props)
+        .then((page) => {
+          setState({ tag: 'ok', page, loading: false })
+        }).catch(() => {
+          setState({ tag: 'error' })
+          setFailed(true)
+        })
+    }
+  }, [props.term, props.page, props.limit, failed])
+
+  return [state, () => setFailed(false)]
 }
