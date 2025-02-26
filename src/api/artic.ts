@@ -56,10 +56,10 @@ export const find = async (id: string): Promise<Artwork | null> => {
 
 const toArtwork = (x: ApiArtwork): Artwork => ({
   thumbnail: `https://www.artic.edu/iiif/2/${x.image_id}/full/!400,400/0/default.jpg`,
-  image: `https://www.artic.edu/iiif/2/${x.image_id}/full/full/0/default.jpg`,
+  image: `https://www.artic.edu/iiif/2/${x.image_id}/full/!1500,1500/0/default.jpg`,
   summary: x.short_description,
   artist: x.artist_title,
   date: x.date_display,
   title: x.title,
-  id: `${x.id}`
+  id: `artic|${x.id}`
 })

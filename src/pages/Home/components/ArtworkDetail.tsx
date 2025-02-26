@@ -27,7 +27,7 @@ export const ArtworkDetail = (props: ArtworkDetailProps) => {
 
       <DialogContent>
         <Typography variant="h6">{props.artwork?.title}</Typography>
-        <Typography variant="body1" sx={{ mb: 1 }}>{props.artwork?.artist}: {props.artwork?.date}</Typography>
+        <Typography variant="body1" sx={{ mb: 1 }}>{props.artwork?.artist}, {props.artwork?.date}</Typography>
         <Typography variant="body2">{props.artwork?.summary}</Typography>
       </DialogContent>
     </Dialog>

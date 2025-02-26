@@ -29,7 +29,7 @@ export const ArtworkCard = (props: ArtworkCardProps) => {
           </Typography>
 
           <Typography variant="body2" component="div" noWrap>
-            {props.artist}: {props.date}
+            {props.artist}, {props.date}
           </Typography>
         </CardContent>
       </CardActionArea>

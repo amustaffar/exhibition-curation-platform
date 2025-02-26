@@ -9,6 +9,7 @@ import { ArtworkGrid } from './components/ArtworkGrid'
 import { useArrayState } from '../../support/useArrayState'
 import { ErrorState } from '../../components/ErrorState'
 import { ArtworkDetail } from './components/ArtworkDetail'
+import { GalleryKey } from '../../api/galleries'
 
 const LIMIT = 12
 // default limit for APIs, in pagination
@@ -20,11 +21,12 @@ export const Home = () => {
   const [exhibitionDrawerOpen, setExhibitionDrawerOpen] = useState(false)
 // (1) term - debounced value, (2) live value
   const [term, searchValue, setSearchValue] = useDebouncedState('')
+  const [gallery, setGallery] = useState<GalleryKey>('artic')
   const [page, setPage] = useState(1)
 
   useEffect(() => { setPage(1) }, [term])
 
-  const [result, retry] = useSearchArtwork({ page, term, limit: LIMIT })
+  const [result, retry] = useSearchArtwork({ gallery, page, term, limit: LIMIT })
   const [selected, setSelected] = useState<Artwork | null>(null)
 
   // return <div /> or a <box />
@@ -53,6 +55,8 @@ export const Home = () => {
           items={result.page.items}
           total={result.page.total}
           onPageChange={setPage}
+          gallery={gallery}
+          onGalleryChange={setGallery}
           // Exhibition
           onAdd={exhibition.add}
           onRemove={exhibition.remove}

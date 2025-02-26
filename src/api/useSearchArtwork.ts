@@ -1,8 +1,11 @@
 import { useEffect, useState } from 'react'
 import * as artic from './artic'
-import { Page, SearchResult } from './types'
+import * as smk from './smk'
+import { Page, SearchInput, SearchResult } from './types'
+import { GalleryKey } from './galleries'
 
 type UseSearchArtworkProps = {
+  gallery: GalleryKey
   term: string
   page: number
   limit: number
@@ -16,7 +19,7 @@ export const useSearchArtwork = (props: UseSearchArtworkProps): [SearchResult, (
     if (!failed) {
       setState((prev) => ({ ...prev, loading: true }))
 
-      artic.search(props)
+      search(props.gallery, props)
         .then((page) => {
           setState({ tag: 'ok', page, loading: false })
         }).catch(() => {
@@ -24,7 +27,16 @@ export const useSearchArtwork = (props: UseSearchArtworkProps): [SearchResult, (
           setFailed(true)
         })
     }
-  }, [props.term, props.page, props.limit, failed])
+  }, [props.gallery, props.term, props.page, props.limit, failed])
 
   return [state, () => setFailed(false)]
+}
+
+const search = (key: GalleryKey, input: SearchInput): Promise<Page> => {
+  switch (key) {
+    case 'artic':
+      return artic.search(input)
+    case 'smk':
+      return smk.search(input)
+  }
 }

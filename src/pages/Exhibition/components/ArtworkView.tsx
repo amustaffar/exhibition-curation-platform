@@ -34,7 +34,7 @@ export const ArtworkView = (props: ArtworkViewProps) => {
       />
       
       <Typography variant="body1" sx={{ mb: 1 }}>{props.title}</Typography>
-      <Typography variant="body2">{props.artist}: {props.date}</Typography>
+      <Typography variant="body2">{props.artist}, {props.date}</Typography>
     </Box>
   )
 }

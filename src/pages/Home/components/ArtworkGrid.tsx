@@ -3,8 +3,11 @@ import { Box, Container, Grid2 as Grid, Pagination, Alert, Button } from '@mui/m
 import { SearchBar } from './SearchBar'
 import { ArtworkCard } from './ArtworkCard'
 import { Artwork } from '../../../api/types'
+import { GalleryKey } from '../../../api/galleries'
 
 export type ArtworkGridProps = {
+  onGalleryChange: (value: GalleryKey) => void
+  gallery: GalleryKey
   onSearch: (term: string) => void
   onPageChange: (page: number) => void
   onAdd: (artwork: Artwork) => void
@@ -21,9 +24,12 @@ export type ArtworkGridProps = {
 export const ArtworkGrid = (props: ArtworkGridProps) => {
   return (
     <Container maxWidth="xl" sx={{ py: 2 }}>
+        
         <SearchBar
           searchValue={props.searchValue}
           onSearch={props.onSearch}
+          gallery={props.gallery}
+          onGalleryChange={props.onGalleryChange}
         />
 
         <Box py={2}>
