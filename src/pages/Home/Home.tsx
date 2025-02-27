@@ -3,7 +3,7 @@ import { Box, LinearProgress } from '@mui/material'
 import { ExhibitionDrawer } from './components/ExhibitionDrawer'
 import { useSearchArtwork } from '../../api/useSearchArtwork'
 import { useDebouncedState } from '../../support/useDebouncedState'
-import { Artwork } from '../../api/types'
+import { Artwork, SortOrder } from '../../api/types'
 import { TopBar } from './components/TopBar'
 import { ArtworkGrid } from './components/ArtworkGrid'
 import { useArrayState } from '../../support/useArrayState'
@@ -22,11 +22,12 @@ export const Home = () => {
 // (1) term - debounced value, (2) live value
   const [term, searchValue, setSearchValue] = useDebouncedState('')
   const [gallery, setGallery] = useState<GalleryKey>('artic')
+  const [sortOrder, setSortOrder] = useState<SortOrder>('desc')
   const [page, setPage] = useState(1)
 
   useEffect(() => { setPage(1) }, [term])
 
-  const [result, retry] = useSearchArtwork({ gallery, page, term, limit: LIMIT })
+  const [result, retry] = useSearchArtwork({ sortOrder, gallery, page, term, limit: LIMIT })
   const [selected, setSelected] = useState<Artwork | null>(null)
 
   // return <div /> or a <box />
@@ -55,8 +56,12 @@ export const Home = () => {
           items={result.page.items}
           total={result.page.total}
           onPageChange={setPage}
+          // Gallary
           gallery={gallery}
           onGalleryChange={setGallery}
+          // Sort
+          sortOrder={sortOrder}
+          onSortOrderChange={setSortOrder}
           // Exhibition
           onAdd={exhibition.add}
           onRemove={exhibition.remove}

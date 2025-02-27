@@ -2,12 +2,14 @@ import React from 'react'
 import { Box, Container, Grid2 as Grid, Pagination, Alert, Button } from '@mui/material'
 import { SearchBar } from './SearchBar'
 import { ArtworkCard } from './ArtworkCard'
-import { Artwork } from '../../../api/types'
+import { Artwork, SortOrder } from '../../../api/types'
 import { GalleryKey } from '../../../api/galleries'
 
 export type ArtworkGridProps = {
   onGalleryChange: (value: GalleryKey) => void
   gallery: GalleryKey
+  onSortOrderChange: (order: SortOrder) => void
+  sortOrder: SortOrder
   onSearch: (term: string) => void
   onPageChange: (page: number) => void
   onAdd: (artwork: Artwork) => void
@@ -30,6 +32,8 @@ export const ArtworkGrid = (props: ArtworkGridProps) => {
           onSearch={props.onSearch}
           gallery={props.gallery}
           onGalleryChange={props.onGalleryChange}
+          sortOrder={props.sortOrder}
+          onSortOrderChange={props.onSortOrderChange}
         />
 
         <Box py={2}>

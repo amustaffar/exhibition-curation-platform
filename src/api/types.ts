@@ -9,10 +9,13 @@ export type Artwork = {
   image: string
 }
 
+export type SortOrder = 'asc' | 'desc'
+
 export type SearchInput = {
   term: string
   page: number
   limit: number
+  sortOrder: SortOrder
 }
 
 export type Page = {

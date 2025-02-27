@@ -28,7 +28,9 @@ export const search = async (input: SearchInput): Promise<Page> => {
       filters: 'has_image:true',
       offset: input.page * input.limit,
       rows: input.limit,
-      keys: input.term || '*'
+      keys: input.term || '*',
+      sort: 'production_dates_start',
+      sort_type: input.sortOrder
     }
   })
 
@@ -53,8 +55,8 @@ const toArtwork = (x: ApiArtwork): Artwork => ({
   thumbnail: `${x.image_iiif_id}/full/!400,400/0/default.jpg`,
   image: `${x.image_iiif_id}/full/!1500,1500/0/default.jpg`,
   summary: "",
-  artist: x.production[0].creator,
-  date: x.production_date[0].period,
-  title: x.titles[0].title,
+  artist: x.production?.[0]?.creator ?? 'Unknown',
+  date: x.production_date?.[0]?.period ?? 'Unknown',
+  title: x.titles?.[0]?.title ?? 'Unknown',
   id: `smk|${x.object_number}`
 })
