@@ -36,7 +36,7 @@ export function BasicMenu<T extends string>(props: BasicMenuProps<T>) {
   }, [props.value])
 
   return (
-    <div>
+    <>
       <Button
         id="basic-button"
         aria-controls={open ? 'basic-menu' : undefined}
@@ -70,6 +70,6 @@ export function BasicMenu<T extends string>(props: BasicMenuProps<T>) {
           )
         })}
       </Menu>
-    </div>
+    </>
   );
 }

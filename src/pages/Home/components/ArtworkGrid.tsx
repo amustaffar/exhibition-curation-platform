@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { ChangeEvent, useCallback, useRef } from 'react'
 import { Box, Container, Grid2 as Grid, Pagination, Alert, Button } from '@mui/material'
 import { SearchBar } from './SearchBar'
 import { ArtworkCard } from './ArtworkCard'
@@ -24,9 +24,13 @@ export type ArtworkGridProps = {
 }
 
 export const ArtworkGrid = (props: ArtworkGridProps) => {
+  const handlePageChange = useCallback((_: ChangeEvent, page: number): void => {
+    document.body.scrollIntoView({ behavior: 'smooth' })
+    props.onPageChange(page)
+  }, [props.onPageChange])
+
   return (
     <Container maxWidth="xl" sx={{ py: 2 }}>
-        
         <SearchBar
           searchValue={props.searchValue}
           onSearch={props.onSearch}
@@ -61,7 +65,7 @@ export const ArtworkGrid = (props: ArtworkGridProps) => {
         <Box display="flex" justifyContent="center" p={2} pb={2}>
           <Pagination
             count={Math.ceil(props.total / props.limit)}
-            onChange={(_, page) => props.onPageChange(page)}
+            onChange={handlePageChange}
             variant="outlined"
             shape="rounded"
             page={props.page}

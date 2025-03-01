@@ -24,6 +24,7 @@ export const search = async (input: SearchInput): Promise<Page> => {
     method: 'GET',
     url: 'https://api.artic.edu/api/v1/artworks/search',
     params: {
+      query: { exists: { field: 'image_id' } },
       sort: toSort(input.sort),
       include: 'artist_pivots,dates',
       from: input.page * input.limit,

@@ -10,13 +10,15 @@ import { useArrayState } from '../../support/useArrayState'
 import { ErrorState } from '../../components/ErrorState'
 import { ArtworkDetail } from './components/ArtworkDetail'
 import { GalleryKey } from '../../api/galleries'
+import { useSessionStorage } from 'react-use'
 
 const LIMIT = 12
 // default limit for APIs, in pagination
 
 export const Home = () => {
   // TODO: This should be in local or session storage
-  const exhibition = useArrayState<Artwork>([])
+  const [savedState, setSavedState] = useSessionStorage<ReadonlyArray<Artwork>>('exhibition', [])
+  const exhibition = useArrayState<Artwork>(savedState)
   // refer "support" - all the logics to manipulate arrays - out of Home
   const [exhibitionDrawerOpen, setExhibitionDrawerOpen] = useState(false)
 // (1) term - debounced value, (2) live value
@@ -26,6 +28,7 @@ export const Home = () => {
   const [page, setPage] = useState(1)
 
   useEffect(() => { setPage(1) }, [term])
+  useEffect(() => setSavedState(exhibition.items), [exhibition.items])
 
   const [result, retry] = useSearchArtwork({ sort, gallery, page, term, limit: LIMIT })
   const [selected, setSelected] = useState<Artwork | null>(null)
