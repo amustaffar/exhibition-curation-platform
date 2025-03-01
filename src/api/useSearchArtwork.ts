@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import * as artic from './artic'
 import * as smk from './smk'
-import { Page, SearchInput, SearchResult, SortOrder } from './types'
+import { Page, SearchInput, SearchResult, Sort } from './types'
 import { GalleryKey } from './galleries'
 
 type UseSearchArtworkProps = {
@@ -9,7 +9,7 @@ type UseSearchArtworkProps = {
   term: string
   page: number
   limit: number
-  sortOrder: SortOrder
+  sort: Sort
 }
 
 export const useSearchArtwork = (props: UseSearchArtworkProps): [SearchResult, () => void] => {
@@ -29,7 +29,7 @@ export const useSearchArtwork = (props: UseSearchArtworkProps): [SearchResult, (
           setFailed(true)
         })
     }
-  }, [props.sortOrder, props.gallery, props.term, props.page, props.limit, failed])
+  }, [props.sort, props.gallery, props.term, props.page, props.limit, failed])
 
   return [state, () => setFailed(false)]
 }

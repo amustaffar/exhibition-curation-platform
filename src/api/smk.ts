@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { Artwork, SearchInput, Page } from './types'
+import { Artwork, SearchInput, Page, Sort } from './types'
 
 type ApiArtwork = {
   titles: Array<{ title: string }>
@@ -29,8 +29,8 @@ export const search = async (input: SearchInput): Promise<Page> => {
       offset: input.page * input.limit,
       rows: input.limit,
       keys: input.term || '*',
-      sort: 'production_dates_start',
-      sort_type: input.sortOrder
+      sort: toSort(input.sort),
+      sort_type: toSort(input.sort)
     }
   })
 
@@ -38,6 +38,14 @@ export const search = async (input: SearchInput): Promise<Page> => {
     total: searchResult.data.found,
     items: searchResult.data.items.map(toArtwork)
   }
+}
+
+const toSort = (sort: Sort): string | undefined => {
+  return sort === 'popular' ? undefined : 'production_dates_start'
+}
+
+const toSortType = (sort: Sort): string | undefined => {
+  return sort === 'popular' ? undefined : sort === 'date_asc' ? 'asc' : 'desc'
 }
 
 export const find = async (id: string): Promise<Artwork | null> => {

@@ -1,29 +1,39 @@
-import * as React from 'react';
+import React, { useState, useCallback, MouseEvent, useMemo, ReactNode } from 'react';
 import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
-import { galleries, GalleryKey, galleryName } from '../../../api/galleries';
+import { ArrowDownward, ArrowDropDown } from '@mui/icons-material';
 
-export type BasicMenuProps = {
-  onChange: (value: GalleryKey) => void
-  value: GalleryKey
+export type Item<T extends string> = { label: string; value: T }
+
+export type BasicMenuProps<T extends string> = {
+  icon?: ReactNode
+  items: ReadonlyArray<Item<T>>
+  onChange: (value: T) => void
+  value: T
 };
 
-export function BasicMenu(props: BasicMenuProps) {
-  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+export function BasicMenu<T extends string>(props: BasicMenuProps<T>) {
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
 
-  const handleSelect = (value: GalleryKey): void => {
+  const handleClick = useCallback((event: MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(event.currentTarget);
+  }, []);
+
+
+  const handleSelect = useCallback((value: T): void => {
     props.onChange(value);
     handleClose()
-  };
+  }, []);
 
-  const handleClose = () => {
+  const handleClose = useCallback(() => {
     setAnchorEl(null);
-  };
+  }, []);
+
+  const label = useMemo(() => {
+    return props.items.find((x) => x.value === props.value)?.label ?? ''
+  }, [props.value])
 
   return (
     <div>
@@ -33,8 +43,12 @@ export function BasicMenu(props: BasicMenuProps) {
         aria-haspopup="true"
         aria-expanded={open ? 'true' : undefined}
         onClick={handleClick}
+        startIcon={props.icon}
+        endIcon={<ArrowDropDown />}
+        variant="outlined"
+        size="small"
       >
-        Gallery: {galleryName(props.value)}
+        {label}
       </Button>
       <Menu
         id="basic-menu"
@@ -45,13 +59,13 @@ export function BasicMenu(props: BasicMenuProps) {
           'aria-labelledby': 'basic-button',
         }}
       >
-        {galleries().map((g) => {
+        {props.items.map((g) => {
           return (
             <MenuItem 
-              key={g.key}
-              onClick={() => {handleSelect(g.key)}}
+              key={g.value}
+              onClick={() => {handleSelect(g.value)}}
             >
-              {g.name}
+              {g.label}
             </MenuItem>
           )
         })}

@@ -9,13 +9,13 @@ export type Artwork = {
   image: string
 }
 
-export type SortOrder = 'asc' | 'desc'
+export type Sort = 'date_asc' | 'date_desc' | 'popular'
 
 export type SearchInput = {
   term: string
   page: number
   limit: number
-  sortOrder: SortOrder
+  sort: Sort
 }
 
 export type Page = {

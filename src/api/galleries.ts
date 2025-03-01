@@ -2,17 +2,13 @@
 export type GalleryKey = 'artic' | 'smk'
 
 export type Gallery = {
-  key: GalleryKey
-  name: string
+  value: GalleryKey
+  label: string
 }
 
 export const galleries = (): ReadonlyArray<Gallery> => {
   return [
-    { key: 'artic', name: 'The Art Institute of Chicago' },
-    { key: 'smk', name: 'National Gallery of Denmark' }
+    { value: 'artic', label: 'The Art Institute of Chicago' },
+    { value: 'smk', label: 'National Gallery of Denmark' }
   ]
-}
-
-export const galleryName = (key: GalleryKey): string => {
-  return galleries().find((x) => x.key === key)?.name!
 }

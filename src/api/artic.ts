@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { Artwork, SearchInput, Page } from './types'
+import { Artwork, SearchInput, Page, Sort } from './types'
 
 type ApiArtwork = {
   id: number
@@ -24,7 +24,7 @@ export const search = async (input: SearchInput): Promise<Page> => {
     method: 'GET',
     url: 'https://api.artic.edu/api/v1/artworks/search',
     params: {
-      sort: [{ date_start: input.sortOrder }],
+      sort: toSort(input.sort),
       include: 'artist_pivots,dates',
       from: input.page * input.limit,
       size: input.limit,
@@ -41,6 +41,17 @@ export const search = async (input: SearchInput): Promise<Page> => {
   return {
     total: searchResult.data.pagination.total,
     items: findResult.data.data.map(toArtwork)
+  }
+}
+
+const toSort = (sort: Sort) => {
+  switch (sort) {
+    case 'date_asc':
+      return [{ date_start: 'asc' }]
+    case 'date_desc':
+      return [{ date_start: 'desc' }]
+    case 'popular':
+      return undefined
   }
 }
 
