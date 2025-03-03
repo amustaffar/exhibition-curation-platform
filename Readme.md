@@ -13,6 +13,7 @@ The platform enables users to explore virtual exhibitions from combined collecti
 
 - [The Art Institute of Chicago](https://www.artic.edu/).
 - [Statens Museum for Kunst - National Gallery of Denmark](https://www.smk.dk/en/).
+
 *These RESTful APIs are always accessible and well-documented*
 
 ### Platform features
