@@ -3,7 +3,7 @@
 - Author: Ahmad Fadhlan Mustaffar.
 - Date: 3rd of March 2025.
 - A project commissioned by Launchpad.
-- [Project link](https://famous-gecko-544ed5.netlify.app/).
+- Developed as a web app: [project link](https://famous-gecko-544ed5.netlify.app/).
 
 ## Summary of the Project
 
@@ -13,6 +13,7 @@ The platform enables users to explore virtual exhibitions from combined collecti
 
 - [The Art Institute of Chicago](https://www.artic.edu/).
 - [Statens Museum for Kunst - National Gallery of Denmark](https://www.smk.dk/en/).
+*These RESTful APIs are always accessible and well-documented*
 
 ### Platform features
 
@@ -22,7 +23,7 @@ The platform enables users to explore virtual exhibitions from combined collecti
 - View details for each artwork individually (full size image display, author, art title, publication date).
 - Add to or remove items from a temporary collection of artworks from both museums.
 - View the exhibition of the saved collection:
-  - *The URL of each exhibition can be copied or shared*
+  - *The URL of each exhibition is permenantly saved, and can be copied or shared to view in any browsers*
   - *To edit an exhibition, simply open it and add/remove items accordingly, and copy/share the new URL*
 
 ## Installation instruction
