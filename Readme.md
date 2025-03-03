@@ -1,8 +1,41 @@
-## Summary of the Project
-Text 
+## Exhibition Curation Platform
 
-## Justifications for the two APIs chosen
-The APIs chosen (1. Art Institute of Chicago, 2. xxx) fit the criteria stipulated by the MVP. Some alternatives were considered but rejected due to not meeting MVP requirements and/or involve work beyond the MVP. For example,
-- MoMA, US (The Museum of Modern Art, New York) - cannot return multiple ids per API request.
-- Science Museum, UK - return multiple types of media (objects of art, people, animal/plant specimens, terminologies, etc.).
-- Smithsonian Institute, US - requires API key, thereby will involve some backend.
+- Author: Ahmad Fadhlan Mustaffar.
+- Date: 3rd of March 2025.
+- A project commissioned by Launchpad.
+
+## Project Link
+
+<famous-gecko-544ed5.netlify.app>
+
+## Summary of the Project
+
+The platform enables users to explore virtual exhibitions from combined collections of antiquities and fine art. It will serve researchers, students and fine art enthusiasts, providing a searcheable and interactive experience of the collections.
+
+### Collection APIs
+
+- [The Art Institute of Chicago](https://www.artic.edu/).
+- [Statens Museum for Kunst - National Gallery of Denmark](https://www.smk.dk/en/).
+
+### Platform features
+
+- Browse artworks with pagination (limited to 12 per page).
+- Search / filter artworks using the search field.
+- Sort artworks based on publication date.
+- View details for each artwork individually (full size image display, author, art title, publication date).
+- Add to or remove items from a temporary collection of artworks from both museums.
+- View the exhibition of the saved collection *(the collection is saved as long as the window is active)*.
+
+## Installation instruction
+
+To run this repo locally:
+1. clone the repository.
+2. *run* npm install.
+3. *run* npm run dev.
+
+### Minimum requirements
+
+Refer to package.json file for the full list of dependencies:
+- Material UI v6.4.4.
+- Axios v1.7.9.
+- React v.19.0.0.
