@@ -22,10 +22,9 @@ The platform enables users to explore virtual exhibitions from combined collecti
 - Search / filter artworks using the search field.
 - Sort artworks based on publication date.
 - View details for each artwork individually (full size image display, author, art title, publication date).
-- Add to or remove items from a temporary collection of artworks from both museums.
-- View the exhibition of the saved collection:
-  - *The URL of each exhibition is permenantly saved, and can be copied or shared to view in any browsers*
-  - *To edit an exhibition, simply open it and add/remove items accordingly, and copy/share the new URL*
+- Add or remove artworks to an exhibition
+  - Exhibitions can be shared with other people using a URL
+  - When building an exhibition state is stored locally to easy navigation between it and the main page
 
 ## Installation instruction
 
