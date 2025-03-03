@@ -3,10 +3,7 @@
 - Author: Ahmad Fadhlan Mustaffar.
 - Date: 3rd of March 2025.
 - A project commissioned by Launchpad.
-
-## Project Link
-
-<famous-gecko-544ed5.netlify.app>
+- [Project link](https://famous-gecko-544ed5.netlify.app/).
 
 ## Summary of the Project
 
