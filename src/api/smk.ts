@@ -30,7 +30,7 @@ export const search = async (input: SearchInput): Promise<Page> => {
       rows: input.limit,
       keys: input.term || '*',
       sort: toSort(input.sort),
-      sort_type: toSort(input.sort)
+      sort_type: toSortType(input.sort)
     }
   })
 
