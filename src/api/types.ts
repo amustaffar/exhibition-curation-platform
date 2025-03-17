@@ -26,3 +26,13 @@ export type Page = {
 export type SearchResult =
   | { tag: 'ok'; page?: Page; loading: boolean }
   | { tag: 'error' }
+
+
+export const sortFromString = (value: string): Sort | null => {
+  switch (value) {
+    case 'date_asc': return 'date_asc'
+    case 'date_desc': return 'date_desc'
+    case 'popular': return 'popular'
+    default: return null
+  }
+}

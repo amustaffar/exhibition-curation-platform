@@ -1,10 +1,12 @@
 import React from 'react'
-import { Avatar, Box, Button, Drawer, IconButton, List, ListItem, ListItemAvatar, ListItemText, Toolbar, Typography } from '@mui/material'
-import { Delete } from '@mui/icons-material'
+import { Avatar, Box, Button, Drawer, IconButton, List, ListItem, ListItemAvatar, ListItemText, Stack, Toolbar, Typography } from '@mui/material'
+import { Delete, Preview, Share } from '@mui/icons-material'
 import { Artwork } from '../../../api/types'
 import { Link } from 'react-router'
+import { useSnackbar } from 'notistack'
 
 export type ExhibitionDrawerProps = {
+  id: string
   artworks: ReadonlyArray<Artwork>
   onRemove: (a: Artwork) => void
   onClose: () => void
@@ -12,6 +14,15 @@ export type ExhibitionDrawerProps = {
 }
 
 export const ExhibitionDrawer = (props: ExhibitionDrawerProps) => {
+  const { enqueueSnackbar } = useSnackbar()
+
+  const handleShare = () => {
+    const { protocol, host } = window.location
+    const url = `${protocol}//${host}/shared-exhibition/${props.artworks.map((a) => encodeURIComponent(a.id)).join(',')}`
+    navigator.clipboard.writeText(url)
+    enqueueSnackbar('Copied URL to Clipboard!', { variant: 'success' })
+  }
+
   return (
     <Drawer
       PaperProps={{ sx: { width: '300px' }}}
@@ -50,16 +61,26 @@ export const ExhibitionDrawer = (props: ExhibitionDrawerProps) => {
         })}
       </List>
 
-      <Box p={2}>
+      <Stack spacing={2} direction="column" p={2}>
         <Button
-          to={`/exhibition/${props.artworks.map((a) => a.id).join(',')}`}
+          startIcon={<Preview />}
+          to={`/exhibitions/${props.id}/view`}
           component={Link}
           variant="contained"
           fullWidth
         >
           View Exhibition
         </Button>
-      </Box>
+
+        <Button
+          onClick={handleShare}
+          startIcon={<Share />}
+          variant="outlined"
+          fullWidth
+        >
+          Share Exhibition
+        </Button>
+      </Stack>
     </Drawer>
   )
 }

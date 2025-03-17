@@ -3,39 +3,51 @@ import { Box, LinearProgress } from '@mui/material'
 import { ExhibitionDrawer } from './components/ExhibitionDrawer'
 import { useSearchArtwork } from '../../api/useSearchArtwork'
 import { useDebouncedState } from '../../support/useDebouncedState'
-import { Artwork, Sort } from '../../api/types'
+import { Artwork, Sort, sortFromString } from '../../api/types'
 import { TopBar } from './components/TopBar'
 import { ArtworkGrid } from './components/ArtworkGrid'
-import { useArrayState } from '../../support/useArrayState'
 import { ErrorState } from '../../components/ErrorState'
 import { ArtworkDetail } from './components/ArtworkDetail'
-import { GalleryKey } from '../../api/galleries'
-import { useSessionStorage } from 'react-use'
+import { GalleryKey, galleryKeyFromString } from '../../api/galleries'
+import { useParams, useSearchParams } from 'react-router'
+import { useExhibition } from '../../state'
+import { useUpdateEffect } from 'react-use'
+import { NotFoundState } from '../../components/NotFoundState'
 
 const LIMIT = 12
 // default limit per response - API specfic - for pagination
 
 export const Home = () => {
-  const [savedState, setSavedState] = useSessionStorage<ReadonlyArray<Artwork>>('exhibition', [])
-  const exhibition = useArrayState<Artwork>(savedState)
-  const [exhibitionDrawerOpen, setExhibitionDrawerOpen] = useState(false)
-  const [term, searchValue, setSearchValue] = useDebouncedState('')
-  const [gallery, setGallery] = useState<GalleryKey>('artic')
-  const [sort, setSort] = useState<Sort>('popular')
-  const [page, setPage] = useState(1)
+  const params = useParams()
+  const { data, addArtwork, removeArtwork } = useExhibition(params.id!)
 
-  useEffect(() => { setPage(1) }, [term])
-  useEffect(() => setSavedState(exhibition.items), [exhibition.items])
+  const [qs, setQs] = useSearchParams()
+  const [term, searchValue, setSearchValue] = useDebouncedState(qs.get('term') ?? '')
+  const [gallery, setGallery] = useState<GalleryKey>(galleryKeyFromString(qs.get('gallery') ?? '') ?? 'artic')
+  const [sort, setSort] = useState<Sort>(sortFromString(qs.get('sort') ?? '') ?? 'popular')
+  const [page, setPage] = useState(parseInt(qs.get('page') ?? '1', 10) || 1)
+
+  useUpdateEffect(() => { setPage(1) }, [term, sort, gallery])
+
+  useEffect(() => {
+    setQs({ term, sort, gallery, page: `${page}` })
+  }, [term, sort, gallery, page])
 
   const [result, retry] = useSearchArtwork({ sort, gallery, page, term, limit: LIMIT })
+
+  const [exhibitionDrawerOpen, setExhibitionDrawerOpen] = useState(false)
   const [selected, setSelected] = useState<Artwork | null>(null)
+
+  if (data === undefined) {
+    return <NotFoundState />
+  }
 
   return (
     <Box>
       <TopBar
-        selectedItems={exhibition.items.length}
+        title={data.title}
+        selectedItems={data.artworks.length}
         onView={() => setExhibitionDrawerOpen(true)}
-        onClear={exhibition.clear}
       />
 
       {result.tag == 'ok' && result.loading && (
@@ -62,9 +74,9 @@ export const Home = () => {
           sort={sort}
           onSortChange={setSort}
           // Exhibition
-          onAdd={exhibition.add}
-          onRemove={exhibition.remove}
-          selectedIds={exhibition.items.map((x) => x.id)}
+          onAdd={addArtwork}
+          onRemove={removeArtwork}
+          selectedIds={data.artworks.map((x) => x.id)}
         />
       )}
 
@@ -73,10 +85,11 @@ export const Home = () => {
       )}
 
       <ExhibitionDrawer
-        artworks={exhibition.items}
+        artworks={data.artworks}
         onClose={() => setExhibitionDrawerOpen(false)}
-        onRemove={exhibition.remove}
+        onRemove={removeArtwork}
         open={exhibitionDrawerOpen}
+        id={data.id}
       />
 
       <ArtworkDetail

@@ -6,6 +6,7 @@ import { Artwork } from '../../../api/types'
 import { Link } from 'react-router'
 
 export type ViewerProps = {
+  id?: string
   artwork: Artwork | null
   onNextClick: () => void
   onPrevClick: () => void
@@ -50,11 +51,13 @@ export const Viewer = (props: ViewerProps) => {
         <ArrowForwardIos fontSize="large" />
       </IconButton>
 
-      <Box sx={{ position: 'absolute', top: 0, left: 0 }}>
-        <IconButton color="inherit" size="large" component={Link} to="/">
-          <Close fontSize="large" />
-        </IconButton>
-      </Box>
+      {props.id && (
+        <Box sx={{ position: 'absolute', top: 0, left: 0 }}>
+          <IconButton color="inherit" size="large" component={Link} to={`/exhibitions/${props.id}`}>
+            <Close fontSize="large" />
+          </IconButton>
+        </Box>
+      )}
     </Box>
   )
 }
