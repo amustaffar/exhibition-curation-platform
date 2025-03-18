@@ -1,13 +1,19 @@
 ## Exhibition Curation Platform
 
 - Author: Ahmad Fadhlan Mustaffar.
-- Date: 3rd of March 2025.
+- Date: 3 March 2025. *Revised 19 March 2025*.
 - A project commissioned by Launchpad.
 - Developed as a web app: [project link](https://famous-gecko-544ed5.netlify.app/).
 
 ## Summary of the Project
 
-The platform enables users to explore virtual exhibitions from combined collections of antiquities and fine art. It will serve researchers, students and fine art enthusiasts, providing a searcheable and interactive experience of the collections.
+This platform enables users to explore virtual exhibitions from combined collections of antiquities and fine art. It will serve researchers, students and fine art enthusiasts, providing a searcheable and interactive experience of the collections.
+
+### Tech stack
+
+- Programming language: TypeScript
+- Framework: React.js
+  - Design library: Material UI (MUI)
 
 ### Collection APIs
 
@@ -18,13 +24,14 @@ The platform enables users to explore virtual exhibitions from combined collecti
 
 ### Platform features
 
-- Browse artworks with pagination (limited to 12 per page).
-- Search / filter artworks using the search field.
+- Browse artworks with pagination (currently limited to 12 per page).
+- Search or filter artworks using keywords via the search field.
 - Sort artworks based on publication date.
-- View details for each artwork individually (full size image display, author, art title, publication date).
+- View details for each artwork individually (full size image display, author, art title and publication date).
 - Add or remove artworks to an exhibition
+  - Ability to create multiple exhibitions, formed from all available gallery APIs
   - Exhibitions can be shared with other people using a URL
-  - When building an exhibition state is stored locally to easy navigation between it and the main page
+  - When building an exhibition state is stored locally to easy navigation between it and the main page. Exhibitions are therefore stored in browser's local storage until users delete them from the platform's landing page
 
 ## Installation instruction
 
