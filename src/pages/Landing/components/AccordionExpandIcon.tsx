@@ -32,7 +32,7 @@ export const AccordionExpandIcon = () => {
         </AccordionSummary>
         <AccordionDetails>
           <Typography>
-          The "Review Exhibition" button on each exhibition page allows users to preview the list of artworks in each exhibition and delete each artwork accordingly within the tab. Below the tab, users can either 1. view the exhibition, or 2. share the exhibition via a URL. In the future, we will provide the functionality to share an exhibition to social media platforms
+          The "Review Exhibition" button on each exhibition page allows users to preview the list of artworks in each exhibition and delete each artwork accordingly within the tab. Below the tab, users can either 1. view the exhibition, or 2. share the exhibition via a URL. In the future, we will provide the functionality to share users' exhibitions in social media platforms e.g. Instagram
           </Typography>
         </AccordionDetails>
       </Accordion>
