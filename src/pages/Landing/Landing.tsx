@@ -5,6 +5,7 @@ import { Intro } from './components/Intro'
 import { ExhibitionList } from './components/ExhibitionList'
 import { AddExhibition } from './components/AddExhibition'
 import { useExhibitions } from '../../state'
+import { AccordionExpandIcon } from './components/AccordionExpandIcon'
 
 export const Landing = () => {
   const exhibitions = useExhibitions()
@@ -23,6 +24,7 @@ export const Landing = () => {
 
       <Container maxWidth="lg">
         <Intro />
+        <AccordionExpandIcon/>
         <Divider />
 
         <ExhibitionList

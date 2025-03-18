@@ -46,3 +46,8 @@ Refer to package.json file for the full list of dependencies:
 - Material UI v6.4.4.
 - Axios v1.7.9.
 - React v.19.0.0.
+
+## Future work
+
+- The current APIs provide sorting by publication date only. We will add in other sorting parameters in the near future.
+- The functionality to share an exhibition via social media platforms (such as Instagram or Facebook).
