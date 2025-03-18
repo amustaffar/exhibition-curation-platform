@@ -43,9 +43,9 @@ export const SearchBar = (props: SearchBarProps) => {
             value={props.sort}
             onChange={props.onSortChange}
             items={[
-              { value: 'popular', label: 'Popular'},
-              { value: 'date_asc', label: 'by Date ASC' },
-              { value: 'date_desc', label: 'by Date DESC' }
+              { value: 'popular', label: 'Sort by Popularity'},
+              { value: 'date_asc', label: 'Sort by Date ASC' },
+              { value: 'date_desc', label: 'Sort by Date DESC' }
             ]}
           />
         </Stack>

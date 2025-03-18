@@ -47,7 +47,7 @@ export const AccordionExpandIcon = () => {
         </AccordionSummary>
         <AccordionDetails>
           <Typography>
-          Currently the platform offers two collection APIs: 1. The Art Institute of Chicago, and 2. The Statens Museum for Kunst, National Gallery of Denmark. Both collections will load the most popular artworks by default. We will expand the list of collection APIs in the future
+          Currently the platform offers two collection APIs: 1. The Art Institute of Chicago, and 2. The Statens Museum for Kunst, National Gallery of Denmark. Popularity is the default sort provided by both APIs, it is effectively their most popular or promoted artworks, defined by the institutions themselves. We have not added filtering as users can search instead. For future work, we will add more collection APIs.
           </Typography>
         </AccordionDetails>
       </Accordion>

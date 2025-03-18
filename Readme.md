@@ -33,12 +33,16 @@ This platform enables users to explore virtual exhibitions from combined collect
   - Exhibitions can be shared with other people using a URL
   - When building an exhibition state is stored locally to easy navigation between it and the main page. Exhibitions are therefore stored in browser's local storage until users delete them from the platform's landing page
 
+#### Sort and filter artworks
+
+Popularity is the default sort provided by both APIs, it is effectively their most popular or promoted artworks, defined by the institutions themselves. We have not added filtering as users can search instead
+
 ## Installation instruction
 
 To run this repo locally:
 1. clone the repository.
-2. *run* npm install.
-3. *run* npm run dev.
+2. *run* `npm install`
+3. *run* `npm run dev`
 
 ### Minimum requirements
 
