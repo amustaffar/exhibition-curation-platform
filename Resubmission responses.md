@@ -1,4 +1,6 @@
-## The Technical Team had the following comments:
+### 12 March 2025 feedback - responses and/or rebuttals
+
+### The Technical Team had the following comments:
 
 > Readme is clear but sparse. What is the project, how did you make it, what tech did you use? Installation instructions would benefit from formatting.
 
@@ -46,14 +48,10 @@ There are three URLs: the landing page, the exhibition editor page and the exhib
 
 There is also a stateless (or all the state is in the URL) share exhibition page that can be shared with your friends.
 
-This is close to a completed project but there are some areas that need attention.
+> This is close to a completed project but there are some areas that need attention.
 
-## Resubmission Required:
+### Resubmission Required:
 
 [x] Users can only have one exhibition.
 
 [x] Search function may not be working as intended.
-
-Please take some time to make these amendments, and resubmit your project here. The deadline for resubmission is Wednesday 19th March at 5pm.
-
-Our Tech Team will then re-review your project one final time and we will be touch once this is completed. Please note this can take approximately 7-10 days (from the deadline date).
